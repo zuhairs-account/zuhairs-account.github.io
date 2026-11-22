@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>zuhair abbas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@100;300;400;500&family=Lora:wght@400;500;600;700&family=Barlow:wght@100;300;400;500&family=Libre+Franklin:wght@100;300;400;500&family=Nunito:wght@200;300;400;500&family=Quicksand:wght@300;400;500&family=Varela+Round&display=swap" rel="stylesheet">
+
     <style>
         /* ═══════════════════════════════════════════════════════════
            CSS CUSTOM PROPERTIES & RESET
@@ -16,12 +20,13 @@
             padding: 0;
         }
         :root {
-            --fg: #111;
-            --dim: #333;
-            --faint: #666;
-            --accent: #e62030;
-            --red-glow: 0 0 10px rgba(230, 32, 48, 1.0);
-            --font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --fg: #160a1f;
+            --dim: #3a2440;
+            --faint: #7a5580;
+            --accent: #00e5ff;
+            --accent-glow: 0 0 10px rgba(0, 229, 255, 0.95);
+            --font: 'Grenze', -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-body: 'Lora', Georgia, 'Times New Roman', serif;
             --text-min: 0.75rem;
         }
         html,
@@ -45,14 +50,20 @@
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            background: linear-gradient(to top, #000 0%, #1a1a1a 30%, #4a4a4a 60%, #a0a0a0 100%);
+            background: linear-gradient(to top,
+                #000000 0%,
+                #030b31 65%,
+                #52098f 90%,
+                #b715af 97%,
+                #ff7cab 100%
+            );
         }
         #godray {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.25) 0%, transparent 65%);
+            background: radial-gradient(circle at 50% 0%, rgba(255, 200, 235, 0.32) 0%, transparent 65%);
             animation: godrayPulse 9s ease-in-out infinite;
         }
         @keyframes godrayPulse {
@@ -108,7 +119,7 @@
         #loading p {
             font-size: 0.8rem;
             letter-spacing: 0.36em;
-            color: #999;
+            color: #c9a3d4;
         }
 
         /* UI wrapper */
@@ -146,13 +157,13 @@
             padding: 1.3rem 2.4rem;
             border-radius: 6px;
             border: 1px solid transparent;
-            border-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0.25) 100%) 1;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.25) 100%);
+            border-image: linear-gradient(to bottom, rgba(255, 228, 246, 0.9) 0%, rgba(58, 12, 60, 0.3) 100%) 1;
+            background: linear-gradient(to bottom, rgba(255, 235, 250, 0.92) 0%, rgba(214, 160, 228, 0.32) 100%);
             text-align: center;
             transition: border-color 0.35s, background 0.35s, box-shadow 0.35s, transform 0.25s;
             position: relative;
             color: var(--fg);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 228, 246, 0.25) inset;
             font-weight: 400;
             white-space: nowrap;
         }
@@ -160,22 +171,22 @@
             padding: 1.3rem 2.4rem;
             border-radius: 6px;
             border: 1px solid transparent;
-            border-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0.25) 100%) 1;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.25) 100%);
+            border-image: linear-gradient(to bottom, rgba(255, 228, 246, 0.9) 0%, rgba(58, 12, 60, 0.3) 100%) 1;
+            background: linear-gradient(to bottom, rgba(255, 235, 250, 0.92) 0%, rgba(214, 160, 228, 0.32) 100%);
             backdrop-filter: blur(2px);              /* ← restored */
             -webkit-backdrop-filter: blur(2px);      /* ← restored */
             text-align: center;
             transition: border-color 0.35s, background 0.35s, box-shadow 0.35s, transform 0.25s;
             position: relative;
             color: var(--fg);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 228, 246, 0.25) inset;
             font-weight: 400;
             white-space: nowrap;
         }
         .node:hover .node-box {
-            border-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(0, 0, 0, 0.35) 100%) 1;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.65) 100%);
-            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45), 0 0 28px rgba(230, 57, 70, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+            border-image: linear-gradient(to bottom, rgba(255, 235, 250, 0.95) 0%, rgba(58, 12, 60, 0.4) 100%) 1;
+            background: linear-gradient(to bottom, rgba(255, 240, 252, 0.96) 0%, rgba(230, 190, 240, 0.7) 100%);
+            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45), 0 0 28px rgba(0, 229, 255, 0.45), 0 0 0 1px rgba(255, 235, 250, 0.35) inset;
             transform: scale(1.06);
         }
         .node:hover .node-box::after { opacity: 1; }
@@ -190,34 +201,34 @@
             font-size: 1.8rem;
             letter-spacing: 0.12em;
             color: var(--accent);
-            text-shadow: 0 0 8px rgba(230, 57, 70, 0.3);
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
             font-weight: 500;
             transition: text-shadow 0.3s;
         }
 
         @keyframes glowPulse {
             0% {
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 5px rgba(230, 57, 70, 0);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 228, 246, 0.25) inset, 0 0 5px rgba(0, 229, 255, 0);
             }
             4% {
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 25px rgba(230, 57, 70, 0.65);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 228, 246, 0.25) inset, 0 0 25px rgba(0, 229, 255, 0.65);
             }
             16% {
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 25px rgba(230, 57, 70, 0.65);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 228, 246, 0.25) inset, 0 0 25px rgba(0, 229, 255, 0.65);
             }
             20% {
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 5px rgba(230, 57, 70, 0);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 228, 246, 0.25) inset, 0 0 5px rgba(0, 229, 255, 0);
             }
             100% {
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 5px rgba(230, 57, 70, 0);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 228, 246, 0.25) inset, 0 0 5px rgba(0, 229, 255, 0);
             }
         }
         @keyframes textGlowPulse {
-            0% { text-shadow: 0 0 8px rgba(230, 57, 70, 0.3); }
-            4% { text-shadow: 0 0 22px rgba(230, 57, 70, 0.9), 0 0 36px rgba(230, 57, 70, 0.6); }
-            16% { text-shadow: 0 0 22px rgba(230, 57, 70, 0.9), 0 0 36px rgba(230, 57, 70, 0.6); }
-            20% { text-shadow: 0 0 8px rgba(230, 57, 70, 0.3); }
-            100% { text-shadow: 0 0 8px rgba(230, 57, 70, 0.3); }
+            0% { text-shadow: 0 0 8px rgba(0, 229, 255, 0.35); }
+            4% { text-shadow: 0 0 22px rgba(0, 229, 255, 0.9), 0 0 36px rgba(0, 229, 255, 0.6); }
+            16% { text-shadow: 0 0 22px rgba(0, 229, 255, 0.9), 0 0 36px rgba(0, 229, 255, 0.6); }
+            20% { text-shadow: 0 0 8px rgba(0, 229, 255, 0.35); }
+            100% { text-shadow: 0 0 8px rgba(0, 229, 255, 0.35); }
         }
         .node-box.sequential-pulse { animation: none !important; }
         .node-l.sequential-glow { animation: none !important; }
@@ -238,8 +249,8 @@
             font-size: clamp(3.4rem, 7vw, 5.5rem);
             font-weight: 100;
             letter-spacing: 0.1em;
-            color: #fff;
-            text-shadow: 0 0 30px rgba(230, 57, 70, 0.4);
+            color: #ffe4f5;
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.35);
         }
         #hero h1 em {
             font-style: normal;
@@ -249,13 +260,13 @@
         #hero p {
             font-size: 0.85rem;
             letter-spacing: 0.28em;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 216, 242, 0.75);
             margin-top: 0.6rem;
         }
         #hero small {
             font-size: var(--text-min);
             letter-spacing: 0.22em;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 200, 235, 0.45);
             display: block;
             margin-top: 0.35rem;
             animation: breathe 4s ease-in-out infinite;
@@ -272,10 +283,10 @@
             z-index: 200;
             font-size: var(--text-min);
             letter-spacing: 0.26em;
-            color: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 228, 246, 0.85);
+            border: 1px solid rgba(255, 205, 240, 0.35);
             padding: 0.55rem 1.1rem;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 200, 235, 0.12);
             backdrop-filter: blur(8px);              /* ← restored */
             -webkit-backdrop-filter: blur(8px);      /* ← restored */
             font-family: var(--font);
@@ -288,8 +299,8 @@
         #back.vis { opacity: 1; pointer-events: auto; }
         #back:hover {
             color: var(--accent);
-            border-color: rgba(230, 57, 70, 0.8);
-            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(0, 229, 255, 0.8);
+            background: rgba(255, 210, 240, 0.22);
         }
 
         #overlay {
@@ -311,11 +322,11 @@
             max-height: 78vh;
             overflow-y: auto;
             padding: 2.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 205, 240, 0.22);
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(4px);              /* ← restored */
             -webkit-backdrop-filter: blur(4px);      /* ← restored */
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.5), 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.5), 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 210, 240, 0.18) inset;
             display: none;
             scrollbar-width: thin;
             scrollbar-color: var(--accent) transparent;
@@ -328,25 +339,25 @@
         .sec-label {
             font-size: var(--text-min);
             letter-spacing: 0.32em;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 210, 240, 0.55);
             margin-bottom: 0.6rem;
         }
         .sec-title {
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 100;
             letter-spacing: 0.14em;
-            color: #fff;
+            color: #ffe6f6;
             margin-bottom: 2.4rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 205, 240, 0.14);
         }
         p.body {
             font-size: 1.2rem;
             line-height: 1.9;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 236, 250, 0.78);
             margin-bottom: 1rem;
         }
-        p.body strong { color: #fff; font-weight: 500; }
+        p.body strong { color: #ffe6f6; font-weight: 500; }
         p.body a { color: var(--accent); text-decoration: none; }
         p.body a:hover { text-decoration: underline; }
 
@@ -354,8 +365,8 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 205, 240, 0.06);
+            border: 1px solid rgba(255, 205, 240, 0.06);
             margin-top: 1.8rem;
         }
         .stat {
@@ -367,14 +378,14 @@
             display: block;
             font-size: 2.4rem;           /* increased stats number size */
             font-weight: 100;
-            color: #fff;
-            text-shadow: var(--red-glow);
+            color: #ffe6f6;
+            text-shadow: var(--accent-glow);
             margin-bottom: 0.15rem;
         }
-        .stat small { font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); }
+        .stat small { font-size: 0.9rem; color: rgba(255, 222, 244, 0.72); }
 
         .tline {
-            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 205, 240, 0.18);
             padding-left: 1.6rem;
             margin-top: 0;
         }
@@ -393,27 +404,27 @@
         }
         .ti-date {
             font-size: var(--text-min);
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 205, 240, 0.45);
             margin-bottom: 0.3rem;
             letter-spacing: 0.18em;
         }
         .ti-role {
             font-size: 1.15rem;
             font-weight: 500;
-            color: #fff;
+            color: #ffe6f6;
             margin-bottom: 0.1rem;
         }
         .ti-org {
             font-size: 0.9rem;
             font-style: italic;
-            color: rgba(255, 255, 255, 0.55);
+            color: rgba(255, 218, 242, 0.58);
             margin-bottom: 0.55rem;
         }
         .ti ul { list-style: none; padding: 0; }
         .ti li {
             font-size: 1rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 232, 247, 0.72);
             padding-left: 0.7rem;
             position: relative;
             margin-bottom: 0.12rem;
@@ -424,7 +435,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 1px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 205, 240, 0.06);
         }
         .pc {
             background: rgba(0, 0, 0, 0.35);
@@ -434,27 +445,27 @@
         .pc:hover { background: rgba(0, 0, 0, 0.55); }
         .pc-tag {
             font-size: var(--text-min);
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 205, 240, 0.45);
             margin-bottom: 0.4rem;
             letter-spacing: 0.16em;
         }
         .pc-title {
             font-size: 1.05rem;
             font-weight: 400;
-            color: #fff;
+            color: #ffe6f6;
             margin-bottom: 0.4rem;
         }
         .pc-desc {
             font-size: 0.9rem;
             line-height: 1.8;
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(255, 232, 247, 0.68);
             margin-bottom: 0.7rem;
         }
         .pc-tech { display: flex; flex-wrap: wrap; gap: 0.18rem; }
         .pt {
             font-size: var(--text-min);
-            color: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 212, 242, 0.55);
+            border: 1px solid rgba(255, 205, 240, 0.2);
             padding: 0.08rem 0.32rem;
             letter-spacing: 0.08em;
         }
@@ -463,21 +474,21 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 1px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 205, 240, 0.06);
         }
         .sg { background: rgba(0, 0, 0, 0.35); padding: 1.1rem; }
         .sg-t {
             font-size: var(--text-min);
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 205, 240, 0.45);
             margin-bottom: 0.6rem;
             letter-spacing: 0.2em;
         }
         .si { display: flex; flex-wrap: wrap; gap: 0.2rem; }
         .s {
             font-size: var(--text-min);
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 218, 242, 0.65);
             padding: 0.12rem 0.4rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 205, 240, 0.2);
             letter-spacing: 0.04em;
             transition: color 0.15s, border-color 0.15s;
             cursor: pointer;
@@ -488,7 +499,7 @@
             display: flex;
             flex-direction: column;
             gap: 1px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 205, 240, 0.06);
             margin-bottom: 1.6rem;
         }
         .cl {
@@ -504,11 +515,11 @@
         .cl:hover { background: rgba(0, 0, 0, 0.55); }
         .cl-l {
             font-size: var(--text-min);
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 205, 240, 0.45);
             margin-bottom: 0.08rem;
             letter-spacing: 0.18em;
         }
-        .cl-v { font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); }
+        .cl-v { font-size: 0.95rem; color: rgba(255, 232, 247, 0.75); }
         .cl-a {
             margin-left: auto;
             font-size: var(--text-min);
@@ -537,24 +548,24 @@
             .sec-panel { padding: 1.6rem; }
         }
         /* two-column vertical hub */
-        .node-box { padding: 0.7rem 1.4rem; min-width: clamp(140px, 17vw, 230px); }
-        .node-n { font-size: 0.7rem; margin-bottom: 0.15rem; }
-        .node-l { font-size: 1.25rem; }
+        .node-box { padding: 1.05rem 1.9rem; min-width: clamp(175px, 20.5vw, 285px); }
+        .node-n { font-size: 0.75rem; margin-bottom: 0.12rem; }
+        .node-l { font-size: 1.55rem; }
         @media (max-width: 700px) {
-            .node-box { padding: 0.55rem 0.6rem; min-width: 140px; }
-            .node-l { font-size: 1rem; letter-spacing: 0.08em; }
+            .node-box { padding: 0.7rem 0.7rem; min-width: 145px; }
+            .node-l { font-size: 1.05rem; letter-spacing: 0.08em; }
             .node-n { font-size: 0.65rem; }
         }
-        
+
         /* panels are stacked so they can slide past each other */
         .sec-panel { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
-        
+
         /* mini menu */
         #minimenu {
             position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
             z-index: 200; display: flex; gap: 2px; max-width: 92vw; overflow-x: auto;
             scrollbar-width: none; padding: 0.3rem;
-            background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 200, 235, 0.1); border: 1px solid rgba(255, 205, 240, 0.28);
             border-radius: 4px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
@@ -562,12 +573,45 @@
         #minimenu.vis { opacity: 1; pointer-events: auto; }
         #minimenu button {
             flex: 0 0 auto; font-family: var(--font); font-size: var(--text-min);
-            letter-spacing: 0.18em; color: rgba(255, 255, 255, 0.7); background: none;
+            letter-spacing: 0.18em; color: rgba(255, 228, 246, 0.72); background: none;
             border: 0; padding: 0.45rem 0.8rem; border-radius: 3px; cursor: pointer;
             white-space: nowrap; transition: color 0.2s, background 0.2s;
         }
         #minimenu button:hover { color: var(--accent); }
-        #minimenu button.active { color: #fff; background: rgba(230, 32, 48, 0.55); }
+        #minimenu button.active { color: #00161c; background: rgba(0, 229, 255, 0.75); }
+
+        /* ── two-font system: Grenze display · Lora body ── */
+        /* body copy — reading text */
+        p.body,
+        .ti li,
+        .ti-org,
+        .ti-date,
+        .pc-desc,
+        .pc-tag,
+        .pt,
+        .stat small,
+        .cl-l,
+        .cl-v,
+        .s,
+        .sg-t {
+            font-family: var(--font-body);
+        }
+        /* chrome & headings — display face (explicit, though inherited) */
+        #hero h1,
+        #hero p,
+        #hero small,
+        .sec-title,
+        .sec-label,
+        .node-l,
+        .node-n,
+        #back,
+        #loading p,
+        .ti-role,
+        .pc-title,
+        .stat b,
+        #minimenu button {
+            font-family: var(--font);
+        }
     </style>
 </head>
 <body>
@@ -634,7 +678,7 @@
             edgeOpacity: 0.6,
             edgeWidth: 1.4,
             glowBlur: 0,                  // no expensive blur
-            glowColor: 'rgba(255,255,255,0.15)',
+            glowColor: 'rgba(255,190,230,0.18)',
             glowWidth: 2.0,
         };
 
@@ -781,17 +825,17 @@
             const geo=s.geo;
             const rv=geo.verts.map(v=>rotateVertex(v,s.rx,s.ry,s.rz));
             const pj=rv.map(v=>project(v,s.size,s.px,s.py));
-            const color=isSection?`rgba(230,20,40,${alpha*0.65})`:`rgba(255,255,255,${alpha*0.22})`;
+            const color=isSection?`rgba(0,229,255,${alpha*0.65})`:`rgba(255,190,232,${alpha*0.22})`;
             shapesCtx.strokeStyle=color;shapesCtx.lineWidth=isSection?1.0:0.8;shapesCtx.lineCap='round';
             shapesCtx.beginPath();
             for(const[i,j]of geo.edges){shapesCtx.moveTo(pj[i][0],pj[i][1]);shapesCtx.lineTo(pj[j][0],pj[j][1]);}
             shapesCtx.stroke();
-            shapesCtx.fillStyle=isSection?`rgba(230,20,40,${alpha*0.55})`:`rgba(255,255,255,${alpha*0.3})`;
+            shapesCtx.fillStyle=isSection?`rgba(0,229,255,${alpha*0.55})`:`rgba(255,190,232,${alpha*0.3})`;
             for(const p of pj){shapesCtx.beginPath();shapesCtx.arc(p[0],p[1],1.0,0,Math.PI*2);shapesCtx.fill();}
         }
         function triggerShapeTransition(toSection){if(toSection){ensureSectionShapes();shapeMixTarget=1;}else{shapeMixTarget=0;}}
 
-        // ── node positioning (unchanged) ──
+        // ── node positioning ──
         const nodes = document.querySelectorAll('.node');
         const nodeDrifts = Array.from(nodes, () => ({ x: 0, y: 0 }));
 
@@ -799,14 +843,17 @@
             const w = window.innerWidth, h = window.innerHeight;
             const perCol = Math.ceil(nodes.length / 2);
             const top = h * 0.09;
-            const bottom = h - (w < 700 ? 150 : 190);      // keep clear of the hero text
-            const step = (bottom - top) / (perCol - 1);
-            const colGap = w < 700 ? w * 0.25 : Math.min(w * 0.18, 230);
+            const bottom = h - (w < 700 ? 160 : 210);      // keep clear of the hero text
+            const span = bottom - top;
+            const step = Math.min(span / (perCol - 1), 135);   // cap → nodes stay close
+            const totalHeight = step * (perCol - 1);
+            const startY = top + (span - totalHeight) / 2;     // centre column vertically
+            const colGap = w < 700 ? w * 0.27 : Math.min(w * 0.22, 260);
             nodes.forEach((node, i) => {
                 const col = i < perCol ? 0 : 1;
                 const row = col ? i - perCol : i;
                 node.style.left = (w / 2 + (col ? colGap : -colGap)) + 'px';
-                node.style.top = (top + step * row) + 'px';
+                node.style.top = (startY + step * row) + 'px';
             });
         }
         updateNodePositions();
@@ -858,7 +905,7 @@
         // ── section content ──
         const PANELS = {
             about: { label:'01', title:'about', html:`<p class="body">I am a computer science researcher whose interests lie in <strong>physics-based simulation, rendering, and 3D computer vision</strong>. I hold a BS in Computer Science from <strong>Habib University</strong> (2026) with a GPA of 3.95/4.0.</p><p class="body"><strong>Visual Computing &amp; AI:</strong> Computer Graphics, Digital Image Processing, Deep Learning, Robotics, Information Theory and Pattern Recognition. <strong>Mathematics:</strong> Linear Algebra, Vector Calculus, Differential Equations, Probability &amp; Statistics, Discrete Mathematics. <strong>Systems &amp; Theory:</strong> Data Structures, Operating Systems, Algorithms, Nature of Computation.</p><p class="body">I practise digital illustration, which sharpens my visual communication and which I bridge with graphics wherever possible. I also enjoy stories across film, games, and literature, particularly fantasy and horror, and listen to electronic and rock music.</p><div class="stats"><div class="stat"><b>3.95</b><small>gpa / 4.0</small></div><div class="stat"><b>7</b><small>courses ta'd</small></div><div class="stat"><b>7×</b><small>dean's list</small></div><div class="stat"><b>3×</b><small>president's list</small></div></div>` },
-            exp: { label:'02', title:'experience', html:`<div class="tline"><div class="ti"><div class="ti-date">2026</div><div class="ti-role">Software Engineer Intern — Gen AI and LLMs</div><div class="ti-org">Data Science Dojo · USA (Remote)</div></div><div class="ti"><div class="ti-date">2026 — present</div><div class="ti-role">Research Assistant</div><div class="ti-org">Habib University</div><ul><li>Research assistant for three courses; see teaching.</li></ul></div><div class="ti"><div class="ti-date">2023 — 2026</div><div class="ti-role">Teaching Assistant</div><div class="ti-org">Habib University</div><ul><li>Teaching assistant across seven courses; see teaching.</li></ul></div><div class="ti"><div class="ti-date">2023</div><div class="ti-role">Game Art Fellow</div><div class="ti-org">Mindstorm Studios · Pakistan</div></div></div>` },
+            exp: { label:'02', title:'experience', html:`<div class="tline"><div class="ti"><div class="ti-date">2026 — present</div><div class="ti-role">Research Assistant</div><div class="ti-org">Habib University</div><ul><li>Research assistant for three courses; see teaching.</li></ul></div><div class="ti"><div class="ti-date">2026</div><div class="ti-role">Software Engineer Intern — Gen AI and LLMs</div><div class="ti-org">Data Science Dojo · USA (Remote)</div></div><div class="ti"><div class="ti-date">2023 — 2026</div><div class="ti-role">Teaching Assistant</div><div class="ti-org">Habib University</div><ul><li>Teaching assistant across seven courses; see teaching.</li></ul></div><div class="ti"><div class="ti-date">2023</div><div class="ti-role">Game Art Fellow</div><div class="ti-org">Mindstorm Studios · Pakistan</div></div></div>` },
             research: { label:'03', title:'research', html:`<div class="tline"><div class="ti"><div class="ti-date">2025 — 2026</div><div class="ti-role">Quadruped Locomotion for Rough Terrain and Confined Environments</div><div class="ti-org">Advisors: Abdul Basit Memon, Syeda Saleha Raza · Co-advisor: Tabsheer Ali Askari</div><ul><li>Constructed a procedural cave generation pipeline targeting lava tubes for testing locomotion in uneven, confined terrain.</li><li>Processed depth camera point clouds into an elevation map to simplify clearance computation and determine optimal robot postures, joined into a trajectory via an artificial potential field.</li><li>Trained PPO locomotion policies in Isaac Lab using curriculum learning over 3 terrain types (rough, blocks, inclines); deployed 3 task-specialized policies (standard, crawl, squeeze) at 50Hz.</li></ul></div><div class="ti"><div class="ti-date">2025 —</div><div class="ti-role">Explainable Multi-Crop Disease Detection</div><div class="ti-org">Advisor: Abdul Samad</div><ul><li>Consolidated a unified plant disease dataset of 67,166 images spanning 16 crops and 54 disease classes.</li><li>Fine-tuned a two-stage multimodal MobileViT pipeline, achieving an F1-score of 97%.</li><li>Integrated GradCAM++, Monte Carlo Dropout, and counterfactual testing to validate model focus on necrotic regions.</li></ul></div><div class="ti"><div class="ti-date">2025 —</div><div class="ti-role">Concrete Crack Segmentation Using Multichannel Fusion</div><div class="ti-org">Advisor: Imran Naseem</div><ul><li>Developed a zero-shot segmentation pipeline fusing intensity, saliency, and Hessian-based line-like feature maps to isolate cracks without GPU training, benchmarking favorably against ML models with an IoU of 75%.</li></ul></div><div class="ti"><div class="ti-date">2025</div><div class="ti-role">Prompt-Based Music Recommendation</div><div class="ti-org">Advisor: Faisal Alvi</div><ul><li>Engineered a recommendation system addressing the lack of transparency and control by fine-tuning Google's T5 to map prompts to audio features, achieving an ensemble accuracy of 80%.</li></ul></div><div class="ti"><div class="ti-date">2024</div><div class="ti-role">Impact of Negativity Bias on Perceptions of Inflation</div><div class="ti-org">Advisor: Faisal Alvi</div><ul><li>Analyzed public sentiment towards price inflation by collecting, transcribing, and analyzing news videos, fine-tuning mDeBERTa and XLM-RoBERTa to reach an F1-score of 81%.</li></ul></div></div>` },
             projects: { label:'04', title:'projects', html:`<div class="pgrid"><div class="pc"><div class="pc-tag">path tracing · 2026</div><div class="pc-title">Fractal Tracer</div><p class="pc-desc">I implemented a Monte Carlo path tracer in C++ using recursive ray bouncing, importance sampling, and Russian Roulette termination across 5 materials, with depth of field on a Menger Sponge fractal scene. A bounding volume hierarchy and OpenMP dynamic scheduling reduced render time from ~86 days to 17.4 minutes for a 1080p scene with 3.2 million primitives.</p><div class="pc-tech"><span class="pt">c++</span><span class="pt">path tracing</span><span class="pt">bvh</span><span class="pt">openmp</span></div></div><div class="pc"><div class="pc-tag">real-time rendering · 2026</div><div class="pc-title">Geocentric Universe</div><p class="pc-desc">I built a real-time planet renderer from scratch with Blinn-Phong shading, 2-pass PCF shadow mapping at 2048×2048 resolution, and Fresnel-effect glass boundary rendering. I generated planetary terrain procedurally via Simplex noise and implemented bloom and particles in Brownian motion.</p><div class="pc-tech"><span class="pt">webgl 2.0</span><span class="pt">glsl</span><span class="pt">shadow maps</span><span class="pt">bloom</span></div></div><div class="pc"><div class="pc-tag">deep learning · 2024–2025</div><div class="pc-title">Noisy Bearing Fault Classification</div><p class="pc-desc">I trained and optimized CNNs to classify distinct bearing fault patterns in time and frequency signal data, obtaining an F1-score above 95% on severely noisy data.</p><div class="pc-tech"><span class="pt">cnns</span><span class="pt">tensorflow</span><span class="pt">signal processing</span></div></div><div class="pc"><div class="pc-tag">robot vision · 2025</div><div class="pc-title">Pose Detection for Robotic Arm</div><p class="pc-desc">I computed object poses through image segmentation and geometric orientation solving, with an error of only 0.001 m.</p><div class="pc-tech"><span class="pt">opencv</span><span class="pt">segmentation</span><span class="pt">pose estimation</span></div></div><div class="pc"><div class="pc-tag">computer graphics · 2024</div><div class="pc-title">Image Relighter Using Ray Tracing</div><p class="pc-desc">I estimated depth for images and converted it into meshes, which I then relit using ray tracing.</p><div class="pc-tech"><span class="pt">ray tracing</span><span class="pt">depth estimation</span><span class="pt">mesh</span></div></div></div>` },
             pubs: { label:'05', title:'publications', html:`<div class="tline"><div class="ti"><div class="ti-role">Thesis</div><ul><li>H. Kashif, R. Hashmi, S. Z. A. Rizvi, A. B. Memon, S. S. Raza, T. A. Askari. “Quadruped Locomotion for Rough Terrain and Confined Environments.”</li></ul></div><div class="ti"><div class="ti-role">Manuscripts</div><ul><li>S. Z. A. Rizvi, S. M. G. Alvi, I. Naseem. “Concrete Crack Segmentation using Multichannel Fusion.”</li><li>S. Z. A. Rizvi, S. S. A. Rizvi, S. Kumar, A. Samad. “Explainable Multi-Crop Plant Disease Classification via a Two-Stage Multimodal Vision Transformer.”</li></ul></div><div class="ti"><div class="ti-role">Presentations</div><ul><li>H. Kashif, R. Hashmi, S. Z. A. Rizvi. “Quadruped Locomotion for Rough Terrain and Confined Environments.” DSSE Undergraduate Research Symposium, 2026.</li><li>S. S. A. Rizvi, S. Z. A. Rizvi. “Prompt-Based Music Recommendation.” Tehqiq Showcase, 2025.</li><li>S. Z. A. Rizvi, N. N. Haji. “Impact of Negativity Bias on Perceptions of Inflation.” STRP Showcase, 2024.</li></ul></div></div>` },
@@ -895,13 +942,13 @@
             menu.appendChild(b);
         }
         document.body.appendChild(menu);
-        
+
         function setActive() {
             menu.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.key === currentKey));
             const a = menu.querySelector('.active');
             if (a) menu.scrollTo({ left: a.offsetLeft - menu.clientWidth / 2 + a.clientWidth / 2, behavior: 'smooth' });
         }
-        
+
         function switchTo(key) {
             if (state !== 'section' || switching || key === currentKey) return;
             const next = overlay.querySelector(`[data-section="${key}"]`);
@@ -921,7 +968,7 @@
                 if (prev !== currentPanel) prev.style.display = 'none';
                 switching = false;
             };
-        }        
+        }
 
         const nodeToSection = {
             'n-about': 'about', 'n-exp': 'exp', 'n-research': 'research', 'n-projects': 'projects',
@@ -963,7 +1010,7 @@
                 snapThenAnimate(0.6, 16, 1, 0);
             }, 420);
         }
-        
+
         function returnToHub() {
             if (state === 'hub') return;
             state = 'hub';

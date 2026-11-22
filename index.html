@@ -536,6 +536,38 @@
             #hero p { font-size: var(--text-min); }
             .sec-panel { padding: 1.6rem; }
         }
+        /* two-column vertical hub */
+        .node-box { padding: 0.7rem 1.4rem; min-width: clamp(140px, 17vw, 230px); }
+        .node-n { font-size: 0.7rem; margin-bottom: 0.15rem; }
+        .node-l { font-size: 1.25rem; }
+        @media (max-width: 700px) {
+            .node-box { padding: 0.55rem 0.6rem; min-width: 140px; }
+            .node-l { font-size: 1rem; letter-spacing: 0.08em; }
+            .node-n { font-size: 0.65rem; }
+        }
+        
+        /* panels are stacked so they can slide past each other */
+        .sec-panel { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+        
+        /* mini menu */
+        #minimenu {
+            position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+            z-index: 200; display: flex; gap: 2px; max-width: 92vw; overflow-x: auto;
+            scrollbar-width: none; padding: 0.3rem;
+            background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 4px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        #minimenu::-webkit-scrollbar { display: none; }
+        #minimenu.vis { opacity: 1; pointer-events: auto; }
+        #minimenu button {
+            flex: 0 0 auto; font-family: var(--font); font-size: var(--text-min);
+            letter-spacing: 0.18em; color: rgba(255, 255, 255, 0.7); background: none;
+            border: 0; padding: 0.45rem 0.8rem; border-radius: 3px; cursor: pointer;
+            white-space: nowrap; transition: color 0.2s, background 0.2s;
+        }
+        #minimenu button:hover { color: var(--accent); }
+        #minimenu button.active { color: #fff; background: rgba(230, 32, 48, 0.55); }
     </style>
 </head>
 <body>
@@ -552,9 +584,14 @@
         <div id="hub">
             <div class="node" id="n-about"><div class="node-box sequential-pulse"><div class="node-n">01</div><div class="node-l sequential-glow">about</div></div></div>
             <div class="node" id="n-exp"><div class="node-box sequential-pulse"><div class="node-n">02</div><div class="node-l sequential-glow">experience</div></div></div>
-            <div class="node" id="n-projects"><div class="node-box sequential-pulse"><div class="node-n">03</div><div class="node-l sequential-glow">projects</div></div></div>
-            <div class="node" id="n-skills"><div class="node-box sequential-pulse"><div class="node-n">04</div><div class="node-l sequential-glow">skills</div></div></div>
-            <div class="node" id="n-contact"><div class="node-box sequential-pulse"><div class="node-n">05</div><div class="node-l sequential-glow">contact</div></div></div>
+            <div class="node" id="n-research"><div class="node-box sequential-pulse"><div class="node-n">03</div><div class="node-l sequential-glow">research</div></div></div>
+            <div class="node" id="n-projects"><div class="node-box sequential-pulse"><div class="node-n">04</div><div class="node-l sequential-glow">projects</div></div></div>
+            <div class="node" id="n-pubs"><div class="node-box sequential-pulse"><div class="node-n">05</div><div class="node-l sequential-glow">publications</div></div></div>
+            <div class="node" id="n-teaching"><div class="node-box sequential-pulse"><div class="node-n">06</div><div class="node-l sequential-glow">teaching</div></div></div>
+            <div class="node" id="n-awards"><div class="node-box sequential-pulse"><div class="node-n">07</div><div class="node-l sequential-glow">awards</div></div></div>
+            <div class="node" id="n-service"><div class="node-box sequential-pulse"><div class="node-n">08</div><div class="node-l sequential-glow">service</div></div></div>
+            <div class="node" id="n-skills"><div class="node-box sequential-pulse"><div class="node-n">09</div><div class="node-l sequential-glow">skills</div></div></div>
+            <div class="node" id="n-contact"><div class="node-box sequential-pulse"><div class="node-n">10</div><div class="node-l sequential-glow">contact</div></div></div>
         </div>
 
         <div id="hero">
@@ -759,18 +796,17 @@
         const nodeDrifts = Array.from(nodes, () => ({ x: 0, y: 0 }));
 
         function updateNodePositions() {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight * 0.45;
-            const maxByWidth = window.innerWidth * 0.35;
-            const maxByHeight = window.innerHeight * 0.26;
-            const radius = Math.min(maxByWidth, maxByHeight);
-            const startAngle = -Math.PI / 2;
+            const w = window.innerWidth, h = window.innerHeight;
+            const perCol = Math.ceil(nodes.length / 2);
+            const top = h * 0.09;
+            const bottom = h - (w < 700 ? 150 : 190);      // keep clear of the hero text
+            const step = (bottom - top) / (perCol - 1);
+            const colGap = w < 700 ? w * 0.25 : Math.min(w * 0.18, 230);
             nodes.forEach((node, i) => {
-                const angle = startAngle + (i * 2 * Math.PI) / nodes.length;
-                const x = centerX + Math.cos(angle) * radius;
-                const y = centerY + Math.sin(angle) * radius;
-                node.style.left = x + 'px';
-                node.style.top = y + 'px';
+                const col = i < perCol ? 0 : 1;
+                const row = col ? i - perCol : i;
+                node.style.left = (w / 2 + (col ? colGap : -colGap)) + 'px';
+                node.style.top = (top + step * row) + 'px';
             });
         }
         updateNodePositions();
@@ -821,11 +857,16 @@
 
         // ── section content ──
         const PANELS = {
-            about: { label:'01', title:'about', html:`<p class="body">cs undergraduate at <strong>habib university, karachi</strong>. graduating 2026. research interests span <strong>physics-based simulation, rendering, and 3d computer vision</strong> — with a preference for problems that sit at the intersection of visual computing and simulation.</p><p class="body">three years as a <strong>teaching assistant</strong> across seven courses and a <strong>research assistant</strong> across three at habib university, covering algorithms, data structures, linear algebra, discrete mathematics, database systems, deep learning, and more. received top performing student employee awards for cs 101 and cs 102.</p><p class="body">currently interning at <strong>data science dojo</strong> as a software engineer on gen ai and llms, working on mcp server integrations, agent templates, and qa pipelines. targeting graduate programs in computer graphics and scientific visualisation — uoft dgp, ubc imager, eth zurich, epfl.</p><p class="body">selected for research abroad at texas a&amp;m university with a 50% grant (2025). regional finalist for the international collegiate programming contest (2022). habib university excellence scholarship (2022).</p><p class="body" style="margin-top:.4rem">outside of research: digital illustrator, design lead at the <strong>arts &amp; cultural club</strong>, deputy director of design for <strong>habib university model united nations viii</strong>, and an avid reader of fantasy and horror.</p><div class="stats"><div class="stat"><b>3.95</b><small>gpa / 4.0</small></div><div class="stat"><b>7</b><small>courses ta'd</small></div><div class="stat"><b>7×</b><small>dean's list</small></div><div class="stat"><b>3×</b><small>president's list</small></div></div>` },
-            exp: { label:'02', title:'experience', html:`<div class="tline"><div class="ti"><div class="ti-date">2026 — present</div><div class="ti-role">software engineer intern — gen ai / llms</div><div class="ti-org">data science dojo · usa (remote)</div><ul><li>building mcp server integrations, agent templates, and qa pipelines.</li></ul></div><div class="ti"><div class="ti-date">2026 — present</div><div class="ti-role">research assistant</div><div class="ti-org">habib university</div><ul><li>ra for cs 355 (database systems), cs 316 (introduction to deep learning), and cs 212 (nature of computation).</li></ul></div><div class="ti"><div class="ti-date">2023 — 2026</div><div class="ti-role">teaching assistant</div><div class="ti-org">habib university</div><ul><li>ta for cs 412 (algorithms), cs 355 (database systems), cs 212 (nature of computation), math 205 (linear algebra), cs 113 (discrete mathematics), cs 102 (data structures &amp; algorithms), and cs 101 (algorithmic problem solving).</li><li>received top performing student employee awards for cs 101 and cs 102.</li></ul></div><div class="ti"><div class="ti-date">2025 — 2026</div><div class="ti-role">undergraduate researcher — quadruped locomotion</div><div class="ti-org">habib university · advisors: abdul basit memon, syeda saleha raza</div><ul><li>procedural cave generation for lava tube testing; elevation mapping from depth point clouds; ppo locomotion policies in isaac lab; deployed 3 task-specialized policies at 50hz. presented orally at dsse undergraduate research symposium 2026.</li></ul></div><div class="ti"><div class="ti-date">2025</div><div class="ti-role">undergraduate researcher — prompt-based music recommendation</div><div class="ti-org">habib university · advisor: faisal alvi</div><ul><li>fine-tuned google t5 to map natural language prompts to audio features. ensemble accuracy of 80% across feature dimensions. presented at tehqiq showcase 2025.</li></ul></div><div class="ti"><div class="ti-date">2024</div><div class="ti-role">undergraduate researcher — inflation perception &amp; sentiment</div><div class="ti-org">habib university · advisor: faisal alvi</div><ul><li>analyzed public sentiment towards price inflation via news video collection, transcription, and fine-tuning mdeberta and xlm-roberta. f1 of 81%. presented at strp showcase 2024.</li></ul></div><div class="ti"><div class="ti-date">2023</div><div class="ti-role">game art fellow</div><div class="ti-org">mindstorm studios</div></div></div>` },
-            projects: { label:'03', title:'projects', html:`<div class="pgrid"><div class="pc"><div class="pc-tag">path tracing · c++</div><div class="pc-title">fractal tracer</div><p class="pc-desc">monte carlo path tracer in c++ via recursive ray bouncing, importance sampling, and russian roulette termination across 5 materials, supporting depth of field on a menger sponge fractal scene. accelerated with a bounding volume hierarchy and parallelized with openmp dynamic scheduling, decreasing render time from ~86 days to 17.4 minutes for a 1080p scene with 3.2 million primitives.</p><div class="pc-tech"><span class="pt">c++</span><span class="pt">path tracing</span><span class="pt">bvh</span><span class="pt">openmp</span></div></div><div class="pc"><div class="pc-tag">real-time rendering · graphics</div><div class="pc-title">geocentric universe</div><p class="pc-desc">real-time planet renderer from scratch with blinn-phong shading, 2-pass pcf shadow mapping at 2048×2048 resolution, and fresnel-effect glass boundary rendering. procedurally generated planetary terrain via simplex noise and implemented bloom and particles in brownian motion.</p><div class="pc-tech"><span class="pt">webgl 2.0</span><span class="pt">glsl</span><span class="pt">shadow maps</span><span class="pt">bloom</span></div></div><div class="pc"><div class="pc-tag">computer vision · xai</div><div class="pc-title">explainable multi-crop disease detection</div><p class="pc-desc">consolidated a unified plant disease dataset of 67,166 images across 16 crops and 54 disease classes. fine-tuned a two-stage multimodal mobilevit pipeline achieving f1 97%. integrated gradcam++, monte carlo dropout, and counterfactual testing to validate attention on necrotic regions. paper in preparation.</p><div class="pc-tech"><span class="pt">mobilevit</span><span class="pt">gradcam++</span><span class="pt">mcd</span><span class="pt">pytorch</span></div></div><div class="pc"><div class="pc-tag">3d vision · robotics</div><div class="pc-title">quadruped locomotion for rough terrain and confined environments</div><p class="pc-desc">procedural cave generation pipeline targeting lava tubes for locomotion testing. processed depth camera point clouds into elevation maps for clearance computation and posture determination via artificial potential fields. trained ppo locomotion policies in isaac lab using curriculum learning over 3 terrain types, deploying 3 task-specialized policies (standard, crawl, squeeze) at 50hz. presented orally at dsse undergraduate research symposium 2026.</p><div class="pc-tech"><span class="pt">ros2</span><span class="pt">gazebo</span><span class="pt">isaac lab</span><span class="pt">blender</span><span class="pt">ppo</span></div></div><div class="pc"><div class="pc-tag">segmentation · zero-shot</div><div class="pc-title">concrete crack segmentation using multichannel fusion</div><p class="pc-desc">zero-shot pipeline fusing intensity, saliency, and hessian-based line-like feature maps to isolate cracks without gpu training, benchmarking favorably against ml models with an iou score of 75%.</p><div class="pc-tech"><span class="pt">opencv</span><span class="pt">hessian</span><span class="pt">zero-shot</span></div></div><div class="pc"><div class="pc-tag">deep learning · signal</div><div class="pc-title">noisy bearing fault classification</div><p class="pc-desc">trained and optimized cnns to classify distinct bearing fault patterns in time and frequency signal data, obtaining a strong f1-score above 95% for severely noisy data.</p><div class="pc-tech"><span class="pt">cnns</span><span class="pt">tensorflow</span><span class="pt">signal processing</span></div></div><div class="pc"><div class="pc-tag">robot vision · pose estimation</div><div class="pc-title">pose detection for robotic arm</div><p class="pc-desc">computed object poses by image segmentation and solving geometric orientation with an error of only 0.001 m.</p><div class="pc-tech"><span class="pt">opencv</span><span class="pt">segmentation</span><span class="pt">pose estimation</span></div></div><div class="pc"><div class="pc-tag">graphics · ray tracing</div><div class="pc-title">image relighter using ray tracing</div><p class="pc-desc">estimated depth for images and converted depth information to meshes which were relit using ray tracing lighting.</p><div class="pc-tech"><span class="pt">ray tracing</span><span class="pt">depth estimation</span><span class="pt">mesh</span></div></div></div>` },
-            skills: { label:'04', title:'skills', html:`<div class="sgrid"><div class="sg"><div class="sg-t">visual computing</div><div class="si"><span class="s">gazebo</span><span class="s">blender</span><span class="s">opencv</span><span class="s">webgl2</span><span class="s">opengl</span><span class="s">glsl</span><span class="s">ros2</span><span class="s">nvidia isaac sim</span></div></div><div class="sg"><div class="sg-t">machine learning</div><div class="si"><span class="s">scikit-learn</span><span class="s">pandas</span><span class="s">numpy</span><span class="s">keras</span><span class="s">tensorflow</span><span class="s">pytorch</span><span class="s">hugging face</span></div></div><div class="sg"><div class="sg-t">programming</div><div class="si"><span class="s">c</span><span class="s">c++</span><span class="s">matlab</span><span class="s">python</span><span class="s">html</span><span class="s">css</span><span class="s">javascript</span><span class="s">node.js</span><span class="s">vue.js</span><span class="s">mysql</span><span class="s">express</span></div></div><div class="sg"><div class="sg-t">workflow</div><div class="si"><span class="s">git</span><span class="s">github</span><span class="s">docker</span><span class="s">latex</span><span class="s">jira</span><span class="s">canva</span><span class="s">photoshop</span><span class="s">illustrator</span><span class="s">premiere pro</span><span class="s">audition</span></div></div></div>` },
-            contact: { label:'05', title:'contact', html:`<p class="body" style="max-width:500px;margin-bottom:2rem">open to research discussions, graduate program enquiries, and collaboration on problems in graphics, vision, and simulation. based in karachi — available globally.</p><div class="clinks"><a href="mailto:zuhair.abbas2503@gmail.com" class="cl"><div><div class="cl-l">email</div><div class="cl-v">zuhair.abbas2503@gmail.com</div></div><span class="cl-a">→</span></a><a href="https://github.com/zuhairs-account" target="_blank" class="cl"><div><div class="cl-l">github</div><div class="cl-v">github.com/zuhairs-account</div></div><span class="cl-a">→</span></a><a href="https://linkedin.com/in/zuhairabbas" target="_blank" class="cl"><div><div class="cl-l">linkedin</div><div class="cl-v">linkedin.com/in/zuhairabbas</div></div><span class="cl-a">→</span></a></div>` }
+            about: { label:'01', title:'about', html:`<p class="body">I am a computer science researcher whose interests lie in <strong>physics-based simulation, rendering, and 3D computer vision</strong>. I hold a BS in Computer Science from <strong>Habib University</strong> (2026) with a GPA of 3.95/4.0.</p><p class="body"><strong>Visual Computing &amp; AI:</strong> Computer Graphics, Digital Image Processing, Deep Learning, Robotics, Information Theory and Pattern Recognition. <strong>Mathematics:</strong> Linear Algebra, Vector Calculus, Differential Equations, Probability &amp; Statistics, Discrete Mathematics. <strong>Systems &amp; Theory:</strong> Data Structures, Operating Systems, Algorithms, Nature of Computation.</p><p class="body">I practise digital illustration, which sharpens my visual communication and which I bridge with graphics wherever possible. I also enjoy stories across film, games, and literature, particularly fantasy and horror, and listen to electronic and rock music.</p><div class="stats"><div class="stat"><b>3.95</b><small>gpa / 4.0</small></div><div class="stat"><b>7</b><small>courses ta'd</small></div><div class="stat"><b>7×</b><small>dean's list</small></div><div class="stat"><b>3×</b><small>president's list</small></div></div>` },
+            exp: { label:'02', title:'experience', html:`<div class="tline"><div class="ti"><div class="ti-date">2026</div><div class="ti-role">Software Engineer Intern — Gen AI and LLMs</div><div class="ti-org">Data Science Dojo · USA (Remote)</div></div><div class="ti"><div class="ti-date">2026 — present</div><div class="ti-role">Research Assistant</div><div class="ti-org">Habib University</div><ul><li>Research assistant for three courses; see teaching.</li></ul></div><div class="ti"><div class="ti-date">2023 — 2026</div><div class="ti-role">Teaching Assistant</div><div class="ti-org">Habib University</div><ul><li>Teaching assistant across seven courses; see teaching.</li></ul></div><div class="ti"><div class="ti-date">2023</div><div class="ti-role">Game Art Fellow</div><div class="ti-org">Mindstorm Studios · Pakistan</div></div></div>` },
+            research: { label:'03', title:'research', html:`<div class="tline"><div class="ti"><div class="ti-date">2025 — 2026</div><div class="ti-role">Quadruped Locomotion for Rough Terrain and Confined Environments</div><div class="ti-org">Advisors: Abdul Basit Memon, Syeda Saleha Raza · Co-advisor: Tabsheer Ali Askari</div><ul><li>Constructed a procedural cave generation pipeline targeting lava tubes for testing locomotion in uneven, confined terrain.</li><li>Processed depth camera point clouds into an elevation map to simplify clearance computation and determine optimal robot postures, joined into a trajectory via an artificial potential field.</li><li>Trained PPO locomotion policies in Isaac Lab using curriculum learning over 3 terrain types (rough, blocks, inclines); deployed 3 task-specialized policies (standard, crawl, squeeze) at 50Hz.</li></ul></div><div class="ti"><div class="ti-date">2025 —</div><div class="ti-role">Explainable Multi-Crop Disease Detection</div><div class="ti-org">Advisor: Abdul Samad</div><ul><li>Consolidated a unified plant disease dataset of 67,166 images spanning 16 crops and 54 disease classes.</li><li>Fine-tuned a two-stage multimodal MobileViT pipeline, achieving an F1-score of 97%.</li><li>Integrated GradCAM++, Monte Carlo Dropout, and counterfactual testing to validate model focus on necrotic regions.</li></ul></div><div class="ti"><div class="ti-date">2025 —</div><div class="ti-role">Concrete Crack Segmentation Using Multichannel Fusion</div><div class="ti-org">Advisor: Imran Naseem</div><ul><li>Developed a zero-shot segmentation pipeline fusing intensity, saliency, and Hessian-based line-like feature maps to isolate cracks without GPU training, benchmarking favorably against ML models with an IoU of 75%.</li></ul></div><div class="ti"><div class="ti-date">2025</div><div class="ti-role">Prompt-Based Music Recommendation</div><div class="ti-org">Advisor: Faisal Alvi</div><ul><li>Engineered a recommendation system addressing the lack of transparency and control by fine-tuning Google's T5 to map prompts to audio features, achieving an ensemble accuracy of 80%.</li></ul></div><div class="ti"><div class="ti-date">2024</div><div class="ti-role">Impact of Negativity Bias on Perceptions of Inflation</div><div class="ti-org">Advisor: Faisal Alvi</div><ul><li>Analyzed public sentiment towards price inflation by collecting, transcribing, and analyzing news videos, fine-tuning mDeBERTa and XLM-RoBERTa to reach an F1-score of 81%.</li></ul></div></div>` },
+            projects: { label:'04', title:'projects', html:`<div class="pgrid"><div class="pc"><div class="pc-tag">path tracing · 2026</div><div class="pc-title">Fractal Tracer</div><p class="pc-desc">I implemented a Monte Carlo path tracer in C++ using recursive ray bouncing, importance sampling, and Russian Roulette termination across 5 materials, with depth of field on a Menger Sponge fractal scene. A bounding volume hierarchy and OpenMP dynamic scheduling reduced render time from ~86 days to 17.4 minutes for a 1080p scene with 3.2 million primitives.</p><div class="pc-tech"><span class="pt">c++</span><span class="pt">path tracing</span><span class="pt">bvh</span><span class="pt">openmp</span></div></div><div class="pc"><div class="pc-tag">real-time rendering · 2026</div><div class="pc-title">Geocentric Universe</div><p class="pc-desc">I built a real-time planet renderer from scratch with Blinn-Phong shading, 2-pass PCF shadow mapping at 2048×2048 resolution, and Fresnel-effect glass boundary rendering. I generated planetary terrain procedurally via Simplex noise and implemented bloom and particles in Brownian motion.</p><div class="pc-tech"><span class="pt">webgl 2.0</span><span class="pt">glsl</span><span class="pt">shadow maps</span><span class="pt">bloom</span></div></div><div class="pc"><div class="pc-tag">deep learning · 2024–2025</div><div class="pc-title">Noisy Bearing Fault Classification</div><p class="pc-desc">I trained and optimized CNNs to classify distinct bearing fault patterns in time and frequency signal data, obtaining an F1-score above 95% on severely noisy data.</p><div class="pc-tech"><span class="pt">cnns</span><span class="pt">tensorflow</span><span class="pt">signal processing</span></div></div><div class="pc"><div class="pc-tag">robot vision · 2025</div><div class="pc-title">Pose Detection for Robotic Arm</div><p class="pc-desc">I computed object poses through image segmentation and geometric orientation solving, with an error of only 0.001 m.</p><div class="pc-tech"><span class="pt">opencv</span><span class="pt">segmentation</span><span class="pt">pose estimation</span></div></div><div class="pc"><div class="pc-tag">computer graphics · 2024</div><div class="pc-title">Image Relighter Using Ray Tracing</div><p class="pc-desc">I estimated depth for images and converted it into meshes, which I then relit using ray tracing.</p><div class="pc-tech"><span class="pt">ray tracing</span><span class="pt">depth estimation</span><span class="pt">mesh</span></div></div></div>` },
+            pubs: { label:'05', title:'publications', html:`<div class="tline"><div class="ti"><div class="ti-role">Thesis</div><ul><li>H. Kashif, R. Hashmi, S. Z. A. Rizvi, A. B. Memon, S. S. Raza, T. A. Askari. “Quadruped Locomotion for Rough Terrain and Confined Environments.”</li></ul></div><div class="ti"><div class="ti-role">Manuscripts</div><ul><li>S. Z. A. Rizvi, S. M. G. Alvi, I. Naseem. “Concrete Crack Segmentation using Multichannel Fusion.”</li><li>S. Z. A. Rizvi, S. S. A. Rizvi, S. Kumar, A. Samad. “Explainable Multi-Crop Plant Disease Classification via a Two-Stage Multimodal Vision Transformer.”</li></ul></div><div class="ti"><div class="ti-role">Presentations</div><ul><li>H. Kashif, R. Hashmi, S. Z. A. Rizvi. “Quadruped Locomotion for Rough Terrain and Confined Environments.” DSSE Undergraduate Research Symposium, 2026.</li><li>S. S. A. Rizvi, S. Z. A. Rizvi. “Prompt-Based Music Recommendation.” Tehqiq Showcase, 2025.</li><li>S. Z. A. Rizvi, N. N. Haji. “Impact of Negativity Bias on Perceptions of Inflation.” STRP Showcase, 2024.</li></ul></div></div>` },
+            teaching: { label:'06', title:'teaching', html:`<div class="tline"><div class="ti"><div class="ti-date">2026 — present</div><div class="ti-role">Research Assistant</div><div class="ti-org">Habib University</div><ul><li>CS 355 – Database Systems</li><li>CS 316 – Introduction to Deep Learning</li><li>CS 212 – Nature of Computation</li></ul></div><div class="ti"><div class="ti-date">2023 — 2026</div><div class="ti-role">Teaching Assistant</div><div class="ti-org">Habib University</div><ul><li>CS 412 – Algorithms: Design and Analysis</li><li>CS 355 – Database Systems</li><li>CS 212 – Nature of Computation</li><li>MATH 205 – Linear Algebra</li><li>CS 113 – Discrete Mathematics</li><li>CS 102 – Data Structures and Algorithms</li><li>CS 101 – Algorithmic Problem Solving</li></ul></div></div><p class="body" style="margin-top:1.6rem">I received top performing awards for my TA work in CS 102 and CS 101.</p>` },
+            awards: { label:'07', title:'awards', html:`<div class="tline"><div class="ti"><div class="ti-date">2023 — 2026</div><div class="ti-role">7× Dean's List</div><div class="ti-org">Top 10% of the school of sciences for the semester · S2023, F2023, S2024, F2024, S2025, F2025, S2026</div></div><div class="ti"><div class="ti-date">2023, 2024, 2025</div><div class="ti-role">3× President's List</div><div class="ti-org">Two consecutive Dean's Lists in an academic year</div></div><div class="ti"><div class="ti-date">F2023, S2024</div><div class="ti-role">2× Top Performing Student Employee</div></div><div class="ti"><div class="ti-date">2025</div><div class="ti-role">Research Abroad, Texas A&amp;M University</div><div class="ti-org">Selected with a 50% grant</div></div><div class="ti"><div class="ti-date">2022</div><div class="ti-role">Habib University Excellence Scholarship</div></div><div class="ti"><div class="ti-date">2022</div><div class="ti-role">Regional Finalist, International Collegiate Programming Contest</div></div></div>` },
+            service: { label:'08', title:'service', html:`<div class="tline"><div class="ti"><div class="ti-date">2025</div><div class="ti-role">Deputy Director of Design</div><div class="ti-org">Habib University Model United Nations VIII</div></div><div class="ti"><div class="ti-date">2025</div><div class="ti-role">Volunteer</div><div class="ti-org">Bridge School</div><ul><li>Automated email outreach.</li></ul></div><div class="ti"><div class="ti-date">2024 — 2025</div><div class="ti-role">Design Lead</div><div class="ti-org">Arts and Cultural Club</div></div><div class="ti"><div class="ti-date">2023 — 2025</div><div class="ti-role">Graphic Designer</div><div class="ti-org">Multiverse Club</div></div><div class="ti"><div class="ti-date">2023</div><div class="ti-role">AI Ethics Researcher</div><div class="ti-org">Encode Justice</div></div></div>` },
+            skills: { label:'09', title:'skills', html:`<div class="sgrid"><div class="sg"><div class="sg-t">visual computing</div><div class="si"><span class="s">gazebo</span><span class="s">blender</span><span class="s">opencv</span><span class="s">webgl2</span><span class="s">opengl</span><span class="s">glsl</span><span class="s">ros2</span><span class="s">nvidia isaac sim</span></div></div><div class="sg"><div class="sg-t">machine learning</div><div class="si"><span class="s">scikit-learn</span><span class="s">pandas</span><span class="s">numpy</span><span class="s">keras</span><span class="s">tensorflow</span><span class="s">pytorch</span><span class="s">hugging face</span></div></div><div class="sg"><div class="sg-t">programming</div><div class="si"><span class="s">c</span><span class="s">c++</span><span class="s">matlab</span><span class="s">python</span><span class="s">html</span><span class="s">css</span><span class="s">javascript</span><span class="s">node.js</span><span class="s">vue.js</span><span class="s">mysql</span><span class="s">express</span></div></div><div class="sg"><div class="sg-t">workflow</div><div class="si"><span class="s">git</span><span class="s">github</span><span class="s">docker</span><span class="s">latex</span><span class="s">jira</span><span class="s">canva</span><span class="s">photoshop</span><span class="s">illustrator</span><span class="s">premiere pro</span><span class="s">audition</span></div></div></div>` },
+            contact: { label:'10', title:'contact', html:`<p class="body" style="max-width:500px;margin-bottom:2rem">I am based in Karachi, Pakistan. I welcome enquiries regarding research, collaboration, and opportunities in graphics, vision, and simulation.</p><div class="clinks"><a href="mailto:zuhair.abbas2503@gmail.com" class="cl"><div><div class="cl-l">email</div><div class="cl-v">zuhair.abbas2503@gmail.com</div></div><span class="cl-a">→</span></a><a href="https://github.com/zuhairs-account" target="_blank" class="cl"><div><div class="cl-l">github</div><div class="cl-v">github.com/zuhairs-account</div></div><span class="cl-a">→</span></a><a href="https://linkedin.com/in/zuhairabbas" target="_blank" class="cl"><div><div class="cl-l">linkedin</div><div class="cl-v">linkedin.com/in/zuhairabbas</div></div><span class="cl-a">→</span></a></div>` }
         };
 
         const overlay = document.getElementById('overlay');
@@ -843,8 +884,48 @@
         const backBtn = document.getElementById('back');
         let state = 'hub', currentPanel = null;
 
+        const menu = document.createElement('div');
+        menu.id = 'minimenu';
+        let currentKey = null, switching = false;
+        for (const [key, data] of Object.entries(PANELS)) {
+            const b = document.createElement('button');
+            b.dataset.key = key;
+            b.textContent = data.title;
+            b.addEventListener('click', () => switchTo(key));
+            menu.appendChild(b);
+        }
+        document.body.appendChild(menu);
+        
+        function setActive() {
+            menu.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.key === currentKey));
+            const a = menu.querySelector('.active');
+            if (a) menu.scrollTo({ left: a.offsetLeft - menu.clientWidth / 2 + a.clientWidth / 2, behavior: 'smooth' });
+        }
+        
+        function switchTo(key) {
+            if (state !== 'section' || switching || key === currentKey) return;
+            const next = overlay.querySelector(`[data-section="${key}"]`);
+            const prev = currentPanel;
+            if (!next || !prev) return;
+            switching = true;
+            next.scrollTop = 0;
+            next.style.display = 'block';
+            const opts = { duration: 500, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)' };
+            prev.animate([{ translate: '0 0', opacity: 1 }, { translate: '-110vw 0', opacity: 0 }], { ...opts, fill: 'forwards' });
+            const anim = next.animate([{ translate: '110vw 0', opacity: 0 }, { translate: '0 0', opacity: 1 }], opts);
+            currentPanel = next;
+            currentKey = key;
+            setActive();
+            anim.onfinish = () => {
+                prev.getAnimations().forEach(a => a.cancel());
+                if (prev !== currentPanel) prev.style.display = 'none';
+                switching = false;
+            };
+        }        
+
         const nodeToSection = {
-            'n-about': 'about', 'n-exp': 'exp', 'n-projects': 'projects',
+            'n-about': 'about', 'n-exp': 'exp', 'n-research': 'research', 'n-projects': 'projects',
+            'n-pubs': 'pubs', 'n-teaching': 'teaching', 'n-awards': 'awards', 'n-service': 'service',
             'n-skills': 'skills', 'n-contact': 'contact'
         };
 
@@ -873,13 +954,16 @@
             setTimeout(() => {
                 document.querySelectorAll('.sec-panel').forEach(p => p.style.display = 'none');
                 const panel = overlay.querySelector(`[data-section="${sectionKey}"]`);
-                if (panel) { panel.style.display = 'block'; currentPanel = panel; }
+                if (panel) { panel.style.display = 'block'; panel.scrollTop = 0; currentPanel = panel; }
+                currentKey = sectionKey;
+                setActive();
                 overlay.classList.add('vis');
                 backBtn.classList.add('vis');
+                menu.classList.add('vis');
                 snapThenAnimate(0.6, 16, 1, 0);
             }, 420);
         }
-
+        
         function returnToHub() {
             if (state === 'hub') return;
             state = 'hub';
@@ -889,6 +973,7 @@
             ui.style.filter = 'blur(16px)';
             overlay.classList.remove('vis');
             backBtn.classList.remove('vis');
+            menu.classList.remove('vis');
             setTimeout(() => {
                 if (currentPanel) currentPanel.style.display = 'none';
                 hub.style.opacity = '1';
